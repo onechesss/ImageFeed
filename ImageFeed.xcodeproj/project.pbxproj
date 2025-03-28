@@ -6,15 +6,29 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildRule section */
+		C6710F1B2D9472DD00E7C0C4 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyPlist\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
-		C6710E182D8C684400E7C0C4 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C610E6462D96FEFF00127308 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ImageFeed.app; path = "/Users/oneche/Desktop/projects/ImageFeed/build/Debug-iphoneos/ImageFeed.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C6710E2A2D8C684600E7C0C4 /* Exceptions for "ImageFeed" folder in "ImageFeed" target */ = {
+		C6710EEF2D946E6800E7C0C4 /* Exceptions for "ImageFeed" folder in "ImageFeed" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = C6710E172D8C684400E7C0C4 /* ImageFeed */;
 		};
@@ -24,7 +38,7 @@
 		C6710E1A2D8C684400E7C0C4 /* ImageFeed */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				C6710E2A2D8C684600E7C0C4 /* Exceptions for "ImageFeed" folder in "ImageFeed" target */,
+				C6710EEF2D946E6800E7C0C4 /* Exceptions for "ImageFeed" folder in "ImageFeed" target */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -46,16 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				C6710E1A2D8C684400E7C0C4 /* ImageFeed */,
-				C6710E192D8C684400E7C0C4 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		C6710E192D8C684400E7C0C4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C6710E182D8C684400E7C0C4 /* ImageFeed.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,6 +75,7 @@
 				C6710E162D8C684400E7C0C4 /* Resources */,
 			);
 			buildRules = (
+				C6710F1B2D9472DD00E7C0C4 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -80,7 +86,7 @@
 			packageProductDependencies = (
 			);
 			productName = ImageFeed;
-			productReference = C6710E182D8C684400E7C0C4 /* ImageFeed.app */;
+			productReference = C610E6462D96FEFF00127308 /* ImageFeed.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +114,7 @@
 			mainGroup = C6710E0F2D8C684400E7C0C4;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = C6710E192D8C684400E7C0C4 /* Products */;
+			productRefGroup = C6710E0F2D8C684400E7C0C4;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -147,14 +153,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6WZ76T9SPJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageFeed/Info.plist;
+				INFOPLIST_FILE = ImageFeed/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -181,14 +187,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6WZ76T9SPJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageFeed/Info.plist;
+				INFOPLIST_FILE = ImageFeed/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
