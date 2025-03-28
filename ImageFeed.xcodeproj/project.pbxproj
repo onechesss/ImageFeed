@@ -21,7 +21,7 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
-		C610E6462D96FEFF00127308 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ImageFeed.app; path = "/Users/oneche/Desktop/projects/ImageFeed/build/Debug-iphoneos/ImageFeed.app"; sourceTree = "<absolute>"; };
+		C610E7782D9708F700127308 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ImageFeed.app; path = "/Users/oneche/Desktop/projects/ImageFeed/build/Debug-iphoneos/ImageFeed.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -86,7 +86,7 @@
 			packageProductDependencies = (
 			);
 			productName = ImageFeed;
-			productReference = C610E6462D96FEFF00127308 /* ImageFeed.app */;
+			productReference = C610E7782D9708F700127308 /* ImageFeed.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

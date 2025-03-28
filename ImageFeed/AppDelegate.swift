@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  ImageFeed
-//
-//  Created by oneche$$$ on 20.03.2025.
-//
-
 import UIKit
 
 @main
