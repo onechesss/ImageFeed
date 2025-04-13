@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SingleImageViewController: UIViewController, UIScrollViewDelegate
+final class SingleImageViewController: UIViewController, UIScrollViewDelegate
 {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var scrollView: UIScrollView!
@@ -82,4 +82,3 @@ class SingleImageViewController: UIViewController, UIScrollViewDelegate
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
 }
-
