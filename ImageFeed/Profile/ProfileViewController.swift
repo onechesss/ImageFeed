@@ -7,9 +7,8 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController
-{
-    public let imageView = UIImageView()
+final class ProfileViewController: UIViewController {
+    private let imageView = UIImageView()
     private let nameLabel = UILabel()
     private let loginNameLabel = UILabel()
     private let descriptionLabel = UILabel()

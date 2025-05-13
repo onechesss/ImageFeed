@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class SingleImageViewController: UIViewController, UIScrollViewDelegate
-{
+final class SingleImageViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var scrollView: UIScrollView!
     
