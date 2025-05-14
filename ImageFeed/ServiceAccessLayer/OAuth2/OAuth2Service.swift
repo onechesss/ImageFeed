@@ -9,11 +9,12 @@ import Foundation
 
 final class OAuth2Service {
     static let shared = OAuth2Service()
-    init() {}
+    private init() {}
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         let request = makeOAuthTokenRequest(code: code)
-        let task = data(for: request) { result in
+        
+        let task = NetworkClient().data(for: request) { result in
             switch result {
             case .success(let data):
                 do {
@@ -27,11 +28,11 @@ final class OAuth2Service {
                 completion(.failure(error))
             }
         }
-        task.resume()
+        task?.resume()
     }
     
-    private func makeOAuthTokenRequest(code: String) -> URLRequest {
-        let baseURL = URL(string: "https://unsplash.com")
+    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
+        guard let baseURL = URL(string: "https://unsplash.com"),
         let url = URL(
             string: "/oauth/token"
             + "?client_id=\(Constants.accessKey)"
@@ -40,9 +41,11 @@ final class OAuth2Service {
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             relativeTo: baseURL
-        )!
+        ) else { print("не удалось создать baseURL или url"); return nil }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        
         return request
     }
 }

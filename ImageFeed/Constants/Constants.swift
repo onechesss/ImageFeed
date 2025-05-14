@@ -15,5 +15,10 @@ enum Constants {
     
     static let accessScope = "public+read_user+write_user+read_photos+write_photos+write_likes+write_followers+read_collections+write_collections"
     
-    static let defaultBaseURL: URL = URL(string: "https://api.unsplash.com")!
+    static let defaultBaseURL: URL = {
+        guard let url = URL(string: "https://api.unsplash.com") else {
+            fatalError("Failed to create default base URL")
+        }
+        return url
+    }()
 }
