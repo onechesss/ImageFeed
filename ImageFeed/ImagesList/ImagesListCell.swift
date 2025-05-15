@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class ImagesListCell: UITableViewCell
-{
+final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var imageInCell: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
