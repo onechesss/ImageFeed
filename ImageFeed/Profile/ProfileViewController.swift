@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private let imageView = UIImageView()
@@ -14,14 +15,36 @@ final class ProfileViewController: UIViewController {
     private let descriptionLabel = UILabel()
     private let logoutButton = UIButton()
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+        
+        ProfileService.shared.fetchProfile(OAuth2TokenStorage.shared.token ?? "") { profile in
+            DispatchQueue.main.async {
+                self.nameLabel.text = profile.name
+                self.descriptionLabel.text = profile.bio
+                self.loginNameLabel.text = profile.loginName
+            }
+        }
         
         setUpProfilePicture(imageView: imageView)
         setUpNameLabel(nameLabel: nameLabel, imageView: imageView)
         setUpLoginNameLabel(loginNameLabel: loginNameLabel, nameLabel: nameLabel)
         setUpDescriptionLabel(descriptionLabel: descriptionLabel, loginNameLabel: loginNameLabel)
         setUpLogoutButton(logoutButton: logoutButton)
+        setupBackgroundColor(vc: self)
     }
 
     private func setUpProfilePicture(imageView: UIImageView)
@@ -75,5 +98,17 @@ final class ProfileViewController: UIViewController {
         logoutButton.setImage(UIImage(named: "logout_button"), for: .normal)
         logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45).isActive = true
         logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+    }
+    
+    private func setupBackgroundColor(vc: UIViewController) {
+        vc.view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        imageView.kf.setImage(with: url, options: [.processor(RoundCornerImageProcessor.init(cornerRadius: 61))])
     }
 }

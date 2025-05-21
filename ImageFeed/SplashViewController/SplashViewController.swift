@@ -6,51 +6,42 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class SplashViewController: UIViewController {
     
     static let shared = SplashViewController()
     
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         if let token = OAuth2TokenStorage.shared.token {
+            fetchProfile(token)
             switchToTabBarController()
         } else {
-            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
+            let authViewController = AuthViewController()
+            authViewController.delegate = self
+            modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true, completion: nil)
+            //performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
-
+    
     func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarViewController")
+            .instantiateViewController(withIdentifier: "TabBarController")
         window.rootViewController = tabBarController
-    }
-}
-
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(ShowAuthenticationScreenSegueIdentifier)") }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
     }
 }
 
@@ -60,17 +51,48 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             OAuth2Service.shared.fetchOAuthToken(code: code) { [weak self] result in
                 DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
                     guard let self else { return }
                     switch result {
                     case .success(let token):
                         OAuth2TokenStorage.shared.token = token
                         AuthViewController().webViewViewControllerDidCancel(WebViewViewController())
                         self.switchToTabBarController()
+                        self.fetchProfile(token)
                     case .failure(let error):
                         print(error.localizedDescription)
+                        let alert = UIAlertController(title: "Что-то пошло не так", message: "Не удалось войти в систему", preferredStyle: .alert)
+                        let alertAction = UIAlertAction(title: "Ок", style: .default)
+                        alert.addAction(alertAction)
+                        self.present(alert, animated: true)
                     }
                 }
             }
         }
+    }
+    
+    private func fetchProfile(_ token: String) {
+        UIBlockingProgressHUD.show()
+        ProfileService.shared.fetchProfile(token) { [weak self] profile in
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+            }
+            ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
+            guard let self = self else { return }
+                switchToTabBarController()
+        }
+    }
+}
+
+// MARK: setup view
+extension SplashViewController {
+    private func setupView() {
+        view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "LaunchScreen symbol")
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0).isActive = true
     }
 }
