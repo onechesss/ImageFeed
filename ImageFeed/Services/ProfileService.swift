@@ -29,7 +29,7 @@ final class ProfileService {
                                       bio: decodedData.bio ?? "")
                 completion(profile)
             case .failure(let error):
-                print("ERROR IN PROFILE SERVICE (31): \(error)")
+                print("ERROR IN PROFILE SERVICE (32): \(error)")
             }
         }
         task?.resume()

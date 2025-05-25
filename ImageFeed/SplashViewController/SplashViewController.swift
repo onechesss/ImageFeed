@@ -20,11 +20,11 @@ final class SplashViewController: UIViewController {
             fetchProfile(token)
             switchToTabBarController()
         } else {
-            let authViewController = AuthViewController()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let authViewController = storyboard.instantiateViewController(identifier: "AuthViewController") as? AuthViewController else { return }
             authViewController.delegate = self
-            modalPresentationStyle = .fullScreen
+            authViewController.modalPresentationStyle = .fullScreen
             present(authViewController, animated: true, completion: nil)
-            //performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
     }
     

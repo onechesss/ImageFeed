@@ -20,6 +20,13 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpProfilePicture(imageView: imageView)
+        setUpNameLabel(nameLabel: nameLabel, imageView: imageView)
+        setUpLoginNameLabel(loginNameLabel: loginNameLabel, nameLabel: nameLabel)
+        setUpDescriptionLabel(descriptionLabel: descriptionLabel, loginNameLabel: loginNameLabel)
+        setUpLogoutButton(logoutButton: logoutButton)
+        setupBackgroundColor(vc: self)
+        
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
@@ -31,27 +38,20 @@ final class ProfileViewController: UIViewController {
             }
         updateAvatar()
         
-        ProfileService.shared.fetchProfile(OAuth2TokenStorage.shared.token ?? "") { profile in
+        ProfileService.shared.fetchProfile(OAuth2TokenStorage.shared.token ?? "") { [weak self] profile in
+            guard let self else { return }
             DispatchQueue.main.async {
                 self.nameLabel.text = profile.name
                 self.descriptionLabel.text = profile.bio
                 self.loginNameLabel.text = profile.loginName
             }
         }
-        
-        setUpProfilePicture(imageView: imageView)
-        setUpNameLabel(nameLabel: nameLabel, imageView: imageView)
-        setUpLoginNameLabel(loginNameLabel: loginNameLabel, nameLabel: nameLabel)
-        setUpDescriptionLabel(descriptionLabel: descriptionLabel, loginNameLabel: loginNameLabel)
-        setUpLogoutButton(logoutButton: logoutButton)
-        setupBackgroundColor(vc: self)
     }
 
     private func setUpProfilePicture(imageView: UIImageView)
     {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-        imageView.image = UIImage(named: "avatar")
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
@@ -65,7 +65,7 @@ final class ProfileViewController: UIViewController {
         nameLabel.font = .systemFont(ofSize: 23, weight: .bold)
         nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        nameLabel.text = "Екатерина Новикова"
+        nameLabel.text = ""
         nameLabel.textColor = .white
     }
     
@@ -77,7 +77,7 @@ final class ProfileViewController: UIViewController {
         loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
         loginNameLabel.font = .systemFont(ofSize: 13, weight: .regular)
         loginNameLabel.textColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
-        loginNameLabel.text = "@ekaterina_nov"
+        loginNameLabel.text = ""
     }
     
     private func setUpDescriptionLabel(descriptionLabel: UILabel, loginNameLabel: UILabel)
@@ -86,7 +86,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(descriptionLabel)
         descriptionLabel.textColor = .white
         descriptionLabel.font = .systemFont(ofSize: 13, weight: .regular)
-        descriptionLabel.text = "Hello, World!"
+        descriptionLabel.text = ""
         descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
         descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
     }
