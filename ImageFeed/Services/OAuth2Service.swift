@@ -26,13 +26,13 @@ final class OAuth2Service {
             if lastCode != code {
                 task?.cancel()
             } else {
-                print("строка 29 OAuth2Service")
+                print("ошибка в Oauth2Service.swift: task != nil, lastCode == code (строка 29)")
                 completion(.failure(AuthServiceError.invalidRequest))
                 return
             }
         } else {
             if lastCode == code {
-                print("строка 35 OAuth2Service")
+                print("ошибка в Oauth2Service.swift: task == nil, lastCode == code (строка 35)")
                 completion(.failure(AuthServiceError.invalidRequest))
                 return
             }
@@ -42,7 +42,7 @@ final class OAuth2Service {
         
         guard let request = makeOAuthTokenRequest(code: code)
         else {
-            print("строка 45 OAuth2Service")
+            print("ошибка в Oauth2Service.swift: не удалось создать URLRequest (строка 45)")
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
@@ -54,7 +54,7 @@ final class OAuth2Service {
             case .success(let decodedData):
                 completion(.success(decodedData.accessToken))
             case .failure(let error):
-                print("ошибка в OAuth2Service (57):\(error.localizedDescription)")
+                print("ошибка в Oauth2Service.swift: \(error.localizedDescription) (строка 57)")
             }
         }
         self.task = task
@@ -72,7 +72,7 @@ final class OAuth2Service {
                 + "&&grant_type=authorization_code",
                 relativeTo: baseURL
               ) else {
-            print("не удалось создать baseURL или url")
+            print("ошибка в Oauth2Service.swift: не удалось создать baseURL или url (строка 75)")
             assertionFailure("Failed to create URL")
             return nil
         }

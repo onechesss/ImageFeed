@@ -36,7 +36,7 @@ final class ProfileImageService {
                         object: self,
                         userInfo: ["URL": decodedData.profileImage.small])
             case .failure(let error):
-                print("ERROR IN PROFILEIMAGESERVICE (40): \(error)")
+                print("ошибка в ProfileImageService.swift: \(error.localizedDescription) (строка 39)")
             }
         }
         task?.resume()

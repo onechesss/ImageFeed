@@ -9,6 +9,7 @@ import Foundation
 
 final class ProfileService {
     static let shared = ProfileService()
+    private init() { }
     
     private(set) var profile: Profile?
     private enum NetworkError: Error {
@@ -29,7 +30,7 @@ final class ProfileService {
                                       bio: decodedData.bio ?? "")
                 completion(profile)
             case .failure(let error):
-                print("ERROR IN PROFILE SERVICE (32): \(error)")
+                print("ошибка в ProfileService.swift: \(error.localizedDescription) (строка 33)")
             }
         }
         task?.resume()

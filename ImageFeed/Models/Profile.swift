@@ -7,7 +7,7 @@
 
 struct Profile {
     let username: String
-    var name: String
-    var loginName: String { return "@\(username)" }
+    let name: String
+    var loginName: String { "@\(username)" }
     let bio: String
 }

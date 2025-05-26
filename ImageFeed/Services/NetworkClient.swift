@@ -18,26 +18,26 @@ struct NetworkClient {
     private init() { }
     
     func objectTask<T: Decodable>(
-            for request: URLRequest,
-            completion: @escaping (Result<T, Error>) -> Void
-        ) -> URLSessionTask? {
-            let decoder = JSONDecoder()
-            let task = data(for: request) { (result: Result<Data, Error>) in
-                switch result {
-                case .success(let data):
-                    do {
-                        let decodedData = try decoder.decode(T.self, from: data)
-                        completion(.success(decodedData))
-                    } catch {
-                        print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
+        for request: URLRequest,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) -> URLSessionTask? {
+        let decoder = JSONDecoder()
+        let task = data(for: request) { (result: Result<Data, Error>) in
+            switch result {
+            case .success(let data):
+                do {
+                    let decodedData = try decoder.decode(T.self, from: data)
+                    completion(.success(decodedData))
+                } catch {
+                    print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
                     completion(.failure(error))
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
-            return task
         }
+        return task
+    }
     
     func data(
         for request: URLRequest?,
@@ -57,7 +57,7 @@ struct NetworkClient {
                 if 200 ..< 300 ~= statusCode {
                     fulfillCompletionOnTheMainThread(.success(data))
                 } else {
-                    print("error on 60 (NetworkClient):=\(NetworkError.httpStatusCode(statusCode))")
+                    print("ошибка в NetworkClient.swift, statusCode=\(NetworkError.httpStatusCode(statusCode))")
                     fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
                 }
             } else if let error = error {
