@@ -17,7 +17,7 @@ enum Constants {
     
     static let defaultBaseURL: URL = {
         guard let url = URL(string: "https://api.unsplash.com") else {
-            fatalError("Failed to create default base URL")
+            fatalError("Не удалось создать baseURL (строка 20 в Constants.swift)")
         }
         return url
     }()
