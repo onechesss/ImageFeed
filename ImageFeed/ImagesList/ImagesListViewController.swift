@@ -46,8 +46,7 @@ final class ImagesListViewController: UIViewController {
 
 
 
-extension ImagesListViewController: UITableViewDelegate
-{
+extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
@@ -65,8 +64,7 @@ extension ImagesListViewController: UITableViewDelegate
     }
 }
 
-extension ImagesListViewController: UITableViewDataSource
-{
+extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
@@ -93,5 +91,11 @@ extension ImagesListViewController: UITableViewDataSource
             }
         }
         return imageListCell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == photos.count {
+            fetchPhotosNextPage()
+        }
     }
 }
