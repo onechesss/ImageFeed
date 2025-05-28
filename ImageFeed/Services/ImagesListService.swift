@@ -9,34 +9,35 @@ import Foundation
 import ProgressHUD
 
 final class ImagesListService {
+    static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     
-    // ...
+    private init() { }
     
     func fetchPhotosNextPage() {
+print("вызов метода fetchPhotosNextPage")
         DispatchQueue.main.async { UIBlockingProgressHUD.dismiss() }
         let nextPage = (lastLoadedPage ?? 0) + 1
         let request = makeRequestForImagesListService()
-        let task = NetworkClient.shared.objectTask(for: request) { [weak self] (result: Result<PhotoResults, Error>) in
-            guard let self else { return }
+        let task = NetworkClient.shared.objectTask(for: request) { (result: Result<[PhotoResult], Error>) in
             switch result {
             case .success(let decodedData):
-                for photo in decodedData.photos {
+                for photo in decodedData {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
                     dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     let date = dateFormatter.date(from: photo.createdAt)
                     let photoForUI = Photo(id: photo.id, size: CGSize(width: photo.width, height: photo.width), createdAt: date, welcomeDescription: photo.description, thumbImageURL: photo.urls.thumb, largeImageURL: photo.urls.full, isLiked: photo.likedByUser)
                     DispatchQueue.main.async {
-                        self.photos.append(photoForUI)
+                        ImagesListService.shared.photos.append(photoForUI)
                     }
                 }
-                NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: nil)
+                NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: ImagesListService.shared)
             case .failure(let error):
-                print("ошибка в ImagesListService.swift: \(error.localizedDescription) (строка 32)")
+                print("ошибка в ImagesListService.swift: \(error.localizedDescription) (строка 39)")
             }
             DispatchQueue.main.async { UIBlockingProgressHUD.dismiss() }
         }
@@ -46,7 +47,7 @@ final class ImagesListService {
     private func makeRequestForImagesListService() -> URLRequest {
         guard let url = URL(string: "\(Constants.defaultBaseURL)/photos")
         else {
-            print("ошибка в ImagesListService.swift: не получилось создать URL (строка 40)")
+            print("ошибка в ImagesListService.swift: не получилось создать URL (строка 49)")
             return URLRequest(url: URL(string: "")!)
         }
         var request = URLRequest(url: url)

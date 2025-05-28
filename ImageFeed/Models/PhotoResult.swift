@@ -5,12 +5,7 @@
 //  Created by oneche$$$ on 27.05.2025.
 //
 
-struct PhotoResults: Codable {
-    let photos: [PhotoResult]
-}
-
 struct PhotoResult: Codable {
-    let photoResult: [PhotoResult]
     let id: String
     let createdAt: String
     let width: Int
@@ -20,7 +15,6 @@ struct PhotoResult: Codable {
     let urls: PhotoResultUrls
     
     private enum CodingKeys: String, CodingKey {
-        case photoResult
         case id
         case createdAt = "created_at"
         case width
