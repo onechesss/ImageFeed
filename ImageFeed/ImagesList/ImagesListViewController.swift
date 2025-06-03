@@ -36,7 +36,7 @@ final class ImagesListViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name("cleanPhotosInImagesList"), object: nil, queue: .main) { [weak self] _ in
             print("notification!")
             guard let self else { return }
-            self.cleanPhotosInImagesListViewController()
+            self.cleanPhotosAndTableViewInImagesListViewController()
         }
     }
     
@@ -136,8 +136,9 @@ extension ImagesListViewController: UITableViewDataSource {
         }
     }
     
-    func cleanPhotosInImagesListViewController() {
+    func cleanPhotosAndTableViewInImagesListViewController() {
         photos = []
+        tableView.reloadData()
     }
     
     private func updateTableViewAnimated() {

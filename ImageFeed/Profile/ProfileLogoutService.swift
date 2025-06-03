@@ -18,7 +18,7 @@ final class ProfileLogoutService {
         cleanCookies()
         cleanTokenStorage()
         cleanProfileImage()
-        cleanPhotosInImagesList()
+        cleanPhotosAndTableViewInImagesList()
     }
     
     private func cleanCookies() {
@@ -43,9 +43,8 @@ final class ProfileLogoutService {
         ProfileImageService.shared.cleanAvatarURL()
     }
     
-    private func cleanPhotosInImagesList() {
+    private func cleanPhotosAndTableViewInImagesList() {
         ImagesListService.shared.cleanPhotos()
         NotificationCenter.default.post(name: NSNotification.Name("cleanPhotosInImagesList"), object: self)
-        ImagesListViewController().cleanPhotosInImagesListViewController()
     }
 }
