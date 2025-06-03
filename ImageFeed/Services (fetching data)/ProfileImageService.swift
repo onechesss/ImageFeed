@@ -41,6 +41,10 @@ final class ProfileImageService {
         }
         task?.resume()
     }
+    
+    func cleanAvatarURL() {
+        avatarURL = nil
+    }
         
     private func makeRequestForProfileImageService(username: String) -> URLRequest? {
         guard let url = URL(string: "\(Constants.defaultBaseURL)/users/\(username)") else { return nil }

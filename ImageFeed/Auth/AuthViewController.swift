@@ -32,6 +32,7 @@ final class AuthViewController: UIViewController {
                 return
             }
             webViewViewController.delegate = self
+            webViewViewController.modalPresentationStyle = .fullScreen
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -48,7 +49,7 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
-        self.delegate?.authViewController(self, didAuthenticateWithCode: code)
+        SplashViewController.shared.authViewController(self, didAuthenticateWithCode: code)
     }
 
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {

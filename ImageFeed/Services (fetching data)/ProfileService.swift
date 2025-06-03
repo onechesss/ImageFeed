@@ -11,7 +11,6 @@ final class ProfileService {
     static let shared = ProfileService()
     private init() { }
     
-    private(set) var profile: Profile?
     private enum NetworkError: Error {
         case codeError
     }
@@ -30,7 +29,7 @@ final class ProfileService {
                                       bio: decodedData.bio ?? "")
                 completion(profile)
             case .failure(let error):
-                print("ошибка в ProfileService.swift: \(error.localizedDescription) (строка 33)")
+                print("ошибка в ProfileService.swift: \(error.localizedDescription) (строка 32)")
             }
         }
         task?.resume()
