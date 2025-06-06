@@ -19,8 +19,7 @@ final class OAuth2TokenStorage {
             else { return nil }
         }
         set {
-            guard let newValue else { print("не удалось сохранить токен (newValue == nil) (строка 21 OAuth2TokenStorage"); return }
-            KeychainWrapper.standard.set(newValue, forKey: "token")
+            KeychainWrapper.standard.set(newValue ?? "", forKey: "token")
         }
     }
 }

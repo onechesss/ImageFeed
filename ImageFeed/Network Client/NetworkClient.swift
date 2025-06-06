@@ -6,7 +6,8 @@
 //
 
 import Foundation
-
+#warning("заметка, чтобы не забыть что существует возможность добавлять warning и error в проекте (прикольная штука)")
+#warning("можно сохранить этот файл в сниппеты, чтобы не писать этот код каждый раз")
 enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
@@ -39,7 +40,7 @@ struct NetworkClient {
         return task
     }
     
-    func data(
+    private func data(
         for request: URLRequest?,
         completion: @escaping (Result<Data, Error>) -> Void
     ) -> URLSessionTask? {

@@ -15,6 +15,7 @@ final class SingleImageViewController: UIViewController, UIScrollViewDelegate {
         didSet {
             guard isViewLoaded else { return }
             imageView.image = image
+            imageView.frame.size = image?.size ?? CGSize(width: 0, height: 0)
             guard let image else { return }
             rescaleAndCenterImageInScrollView(image: image)
         }
@@ -23,7 +24,6 @@ final class SingleImageViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
-        imageView.frame.size = image?.size ?? CGSize(width: 0, height: 0)
         scrollView.maximumZoomScale = 1.25
         scrollView.minimumZoomScale = 0.1
         guard let image else { return }
