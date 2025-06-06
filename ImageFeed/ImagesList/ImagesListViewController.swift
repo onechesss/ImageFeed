@@ -27,14 +27,14 @@ final class ImagesListViewController: UIViewController {
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
-        NotificationCenter.default.addObserver(forName: ImagesListService.didChangeNotification, object: nil, queue: .main) { [self] _ in
+        NotificationCenter.default.addObserver(forName: ImagesListService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self else { return }
             DispatchQueue.main.async { self.updateTableViewAnimated() }
         }
         
         ImagesListService.shared.fetchPhotosNextPage()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name("cleanPhotosInImagesList"), object: nil, queue: .main) { [weak self] _ in
-            print("notification!")
             guard let self else { return }
             self.cleanPhotosAndTableViewInImagesListViewController()
         }

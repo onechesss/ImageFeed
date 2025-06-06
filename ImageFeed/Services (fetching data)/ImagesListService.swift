@@ -40,7 +40,7 @@ final class ImagesListService {
                     newPhotos.append(photoForUI)
                 }
                 DispatchQueue.main.async {
-                    self.photos.append(contentsOf: newPhotos)
+                    ImagesListService.shared.photos.append(contentsOf: newPhotos)
                     NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: ImagesListService.shared)
                 }
             case .failure(let error):
