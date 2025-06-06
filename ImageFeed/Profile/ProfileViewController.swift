@@ -117,11 +117,9 @@ final class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Да", style: .default) { _ in
             ProfileLogoutService.shared.logout()
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
-            
-            authVC.modalPresentationStyle = .fullScreen
-            self.present(authVC, animated: true)
+            let splashVC = SplashViewController()
+            splashVC.modalPresentationStyle = .fullScreen
+            self.present(splashVC, animated: true)
         })
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         present(alert, animated: true)

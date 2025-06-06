@@ -15,21 +15,25 @@ final class ImagesListService {
     
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
+    private var photosAreFetching = false
+    private lazy var dateFormatter = ISO8601DateFormatter()
     
     private init() { }
     
     func fetchPhotosNextPage() {
+        guard !ImagesListService.shared.photosAreFetching else { return }
+        ImagesListService.shared.photosAreFetching = true
         DispatchQueue.main.async { UIBlockingProgressHUD.dismiss() }
-        let nextPage = (lastLoadedPage ?? 0) + 1
+        let nextPage = (ImagesListService.shared.lastLoadedPage ?? 0) + 1
         let request = makeRequestForImagesListService(nextPage: nextPage)
-        lastLoadedPage = nextPage
+        ImagesListService.shared.lastLoadedPage = nextPage
         let task = NetworkClient.shared.objectTask(for: request) { (result: Result<[PhotoResult], Error>) in
             switch result {
             case .success(let decodedData):
                 var newPhotos: [Photo] = []
                 for photo in decodedData {
-                    let dateFormatter = ISO8601DateFormatter()
-                    let date = dateFormatter.date(from: photo.createdAt)
+                    
+                    let date = ImagesListService.shared.dateFormatter.date(from: photo.createdAt)
                     let photoForUI = Photo(id: photo.id,
                                            size: CGSize(width: photo.width, height: photo.height),
                                            createdAt: date,
@@ -46,7 +50,9 @@ final class ImagesListService {
             case .failure(let error):
                 print("ошибка в ImagesListService.swift: \(error.localizedDescription) (строка 49)")
             }
-            DispatchQueue.main.async { UIBlockingProgressHUD.dismiss() }
+            DispatchQueue.main.async {
+                ImagesListService.shared.photosAreFetching = false
+                UIBlockingProgressHUD.dismiss() }
         }
         task?.resume()
     }

@@ -47,7 +47,7 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        dismiss(animated: true) { [weak self] in
+        vc.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             OAuth2Service.shared.fetchOAuthToken(code: code) { [weak self] result in
                 UIBlockingProgressHUD.dismiss()

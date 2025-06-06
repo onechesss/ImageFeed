@@ -120,7 +120,13 @@ extension ImagesListViewController: UITableViewDataSource {
             cell.imageInCell.image = imageView.image
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
-            cell.dateLabel.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
+            if let date = photos[indexPath.row].createdAt {
+                cell.dateLabel.text = dateFormatter.string(from: date)
+            }
+            else {
+                cell.dateLabel.text = ""
+            }
+            //cell.dateLabel.text = dateFormatter.string(from: photos[indexPath.row].createdAt ?? Date())
             if photos[indexPath.row].isLiked {
                 cell.likeButton.setImage(UIImage(named: "like_button_on"), for: .normal)
             } else {
