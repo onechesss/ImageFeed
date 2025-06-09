@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import WebKit
+@preconcurrency import WebKit
 
 final class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
@@ -29,7 +29,7 @@ final class WebViewViewController: UIViewController {
                  self.updateProgress()
              })
     }
-
+    
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
@@ -81,9 +81,7 @@ extension WebViewViewController: WKNavigationDelegate {
             let codeItem = items.first(where: { $0.name == "code" })
         {
             return codeItem.value
-        } else {
-            return nil
-        }
+        } else { return nil }
     }
 }
 

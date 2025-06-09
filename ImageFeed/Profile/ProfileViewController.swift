@@ -98,6 +98,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.setImage(UIImage(named: "logout_button"), for: .normal)
         logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45).isActive = true
         logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        logoutButton.addTarget(self, action: #selector(logoutButtonClicked), for: .touchUpInside)
     }
     
     private func setupBackgroundColor(vc: UIViewController) {
@@ -110,5 +111,17 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         imageView.kf.setImage(with: url, options: [.processor(RoundCornerImageProcessor.init(cornerRadius: 61))])
+    }
+    
+    @objc private func logoutButtonClicked() {
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Да", style: .default) { _ in
+            ProfileLogoutService.shared.logout()
+            let splashVC = SplashViewController()
+            splashVC.modalPresentationStyle = .fullScreen
+            self.present(splashVC, animated: true)
+        })
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+        present(alert, animated: true)
     }
 }

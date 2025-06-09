@@ -32,6 +32,7 @@ final class AuthViewController: UIViewController {
                 return
             }
             webViewViewController.delegate = self
+            webViewViewController.modalPresentationStyle = .fullScreen
         } else {
             super.prepare(for: segue, sender: sender)
         }

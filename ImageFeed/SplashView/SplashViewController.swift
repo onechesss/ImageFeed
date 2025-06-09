@@ -47,25 +47,23 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        dismiss(animated: true) { [weak self] in
+        vc.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             OAuth2Service.shared.fetchOAuthToken(code: code) { [weak self] result in
-                DispatchQueue.main.async {
-                    UIBlockingProgressHUD.dismiss()
-                    guard let self else { return }
-                    switch result {
-                    case .success(let token):
-                        OAuth2TokenStorage.shared.token = token
-                        AuthViewController().webViewViewControllerDidCancel(WebViewViewController())
-                        self.switchToTabBarController()
-                        self.fetchProfile(token)
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        let alert = UIAlertController(title: "Что-то пошло не так", message: "Не удалось войти в систему", preferredStyle: .alert)
-                        let alertAction = UIAlertAction(title: "Ок", style: .default)
-                        alert.addAction(alertAction)
-                        self.present(alert, animated: true)
-                    }
+                UIBlockingProgressHUD.dismiss()
+                guard let self else { return }
+                switch result {
+                case .success(let token):
+                    OAuth2TokenStorage.shared.token = token
+                    AuthViewController().webViewViewControllerDidCancel(WebViewViewController())
+                    self.switchToTabBarController()
+                    self.fetchProfile(token)
+                case .failure(let error):
+                    print("ошибка в SplashViewController: \(error.localizedDescription) (строка 62)")
+                    let alert = UIAlertController(title: "Что-то пошло не так", message: "Не удалось войти в систему", preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "Ок", style: .default)
+                    alert.addAction(alertAction)
+                    self.present(alert, animated: true)
                 }
             }
         }
