@@ -55,7 +55,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                 switch result {
                 case .success(let token):
                     OAuth2TokenStorage.shared.token = token
-                    AuthViewController().webViewViewControllerDidCancel(WebViewViewController())
                     self.switchToTabBarController()
                     self.fetchProfile(token)
                 case .failure(let error):
