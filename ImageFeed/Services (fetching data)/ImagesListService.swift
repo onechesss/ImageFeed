@@ -32,7 +32,6 @@ final class ImagesListService {
             case .success(let decodedData):
                 var newPhotos: [Photo] = []
                 for photo in decodedData {
-                    
                     let date = ImagesListService.shared.dateFormatter.date(from: photo.createdAt)
                     let photoForUI = Photo(id: photo.id,
                                            size: CGSize(width: photo.width, height: photo.height),
